@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/facecreatestyle.css" />
+  </head>
+  <body>
+    <div class="face_select_area">
+      <canvas id="can"></canvas>
+      <div class="parts_select_area">
+        <p>顔選択</p>
+        <ul class="part_select_item_list">
+          <li class="part_select_item" id="part_select_item_eyebrow">
+            <p>眉毛</p>
+            <div class="part_select_control">
+              <input type="button" value="←" id="id_button_eyebrow_l" />
+              <p id="id_textbox_eyebrow">1</p>
+              <input type="button" value="→" id="id_button_eyebrow_r" />
+            </div>
+          </li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/facecreate.js"></script>
+  </body>
+</html>

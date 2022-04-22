@@ -1,0 +1,55 @@
+.face_select_area{
+  display: flex;
+}
+
+.parts_select_area{
+  width: 30%;
+  font-size: 2.0rem;
+  text-align: center;
+}
+
+.parts_select_area p{
+  padding: 0%;
+  margin: 0%;
+}
+
+.part_select_item_list{
+  list-style: none;
+  padding: 0%;
+}
+
+.part_select_item{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 0%;
+  margin: 0%;
+}
+
+.part_select_item p {
+  padding: 0%;
+  margin: 0%;
+  background-color: aquamarine;
+}
+
+.part_select_control{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0%;
+  margin: 0%;
+}
+
+.part_select_control p{
+  padding: 0%;
+  margin: 0%;
+  background-color: white;
+}
+
+.part_select_control input{
+  width: 25%;
+  font-size: 2.0rem;
+}
