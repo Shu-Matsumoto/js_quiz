@@ -1,0 +1,36 @@
+body{
+  width: 1280px;;
+  text-align: center;
+  padding: 0%;
+  margin: 0%;
+}
+
+.user_information_field{
+  width: 100%;
+  display: flex;
+}
+
+.information_list{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.game_score_field{
+  width: 100%;
+  background-color:gainsboro;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.label_score_pair{
+  width: 40%;
+  display: flex;
+  justify-content:flex-end;
+}
+
+.label_score_pair p{
+  padding: 0% 0% 0% 10%;
+  margin: 0%;
+  font-size: 1.5rem;
+}

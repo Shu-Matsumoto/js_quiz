@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSSの読み込み -->
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/typing.css" />
+  </head>
+  <body>
+    <div class="user_information_field">
+      <canvas id="can_user_information"></canvas>
+      <ul class="information_list">
+        <li class="label_score_pair">
+          <p>User:</p>
+          <p id="text_user_name">typing-user1</p>
+        </li>
+        <li class="label_score_pair">
+          <p>Highest score:</p>
+          <p id="text_highest_score">100</p>
+        </li>
+      </ul>
+    </div>
+    <div class="game_score_field">
+      <ul class="information_list">
+        <li class="label_score_pair">
+          <p>Time left[s]:</p>
+          <p id="text_time_left">30</p>
+        </li>
+        <li class="label_score_pair">
+          <p>Score:</p>
+          <p id="text_game_score">000</p>
+        </li>
+      </ul>
+    </div>
+    <div class="typing_field">
+      <canvas id="can_typing"></canvas>
+    </div>
+    <!--<audio type="audio/mp3" src="../audio/Keyboard01.mp3"></audio>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="../js/typing.js"></script>
+  </body>
+</html>
