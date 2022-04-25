@@ -4,7 +4,7 @@ import { UserInformationTable } from "../js/userinformation.js";
 import { SaveUsersDataToLS, LoadUsersDataFromLS } from "../js/userinformation.js";
 import { INDEX_PARTS_FACE, INDEX_PARTS_EYEBROW, INDEX_PARTS_EYE, INDEX_PARTS_NOSE, INDEX_PARTS_MOUTH } from "../js/facecreatemodule.js";
 import { FaceSprite, EyebrowSprite, EyeSprite, NoseSprite, MouthSprite, PartsIndexs } from "../js/facecreatemodule.js";
-import { DrawFace } from "../js/facecreatemodule.js";
+import { SetPartsIndexs, DrawFace } from "../js/facecreatemodule.js";
 
 // 画面フレームレート
 const FPS = 60;
@@ -15,12 +15,15 @@ const GAME_SPEED = 1000 / FPS;
 const SPRITE_FACE_IMG = "../img/kaoparts_resize_mini.png";
 
 // ロードする画像ファイルパス(タイピング画面)
-const MONSTER_IMG_TIGA = "../img/mh/tigarex.jpg";// ティガレックス
-const MONSTER_IMG_JINOUGA = "../img/mh/jinouga.jpg";// ティガレックス
+const MONSTER_IMG_DOSBAGY = "../img/mh/dosbagy.jpg";// ドスバギィ
+const MONSTER_IMG_FULFUL = "../img/mh/fulful.jpg";  // フルフル
+const MONSTER_IMG_REUS = "../img/mh/rioreusu.jpg";   // リオレウス
+const MONSTER_IMG_TIGA = "../img/mh/tigarex.jpg";   // ティガレックス
+const MONSTER_IMG_RAJYAN = "../img/mh/rajyan.jpg";  // ラージャン
 
 // フォントスタイル
 const FONT_STYLE = "Meiryo UI 10px sans-serif";
-const FONT_STYLE_OUTER = "italic bold 101px sans-serif";
+const FONT_STYLE_OUTER = "italic bold 80px sans-serif";
 
 // タイプキーワード一覧
 const TypeKeywordList = [
@@ -51,6 +54,9 @@ const TypeKeywordList = [
   "library",  //24
 ];
 
+// カウントダウンタイマ[sec]
+const CountdownTimerSec = 5;
+
 // キャンバス(タイピングエリア)
 let user_face_can = document.getElementById("can_user_information");
 let user_face_con = user_face_can.getContext("2d");
@@ -58,8 +64,8 @@ let user_face_con = user_face_can.getContext("2d");
 // キャンバス(タイピングエリア)
 let typing_can = document.getElementById("can_typing");
 let typing_con = typing_can.getContext("2d");
-typing_can.width = 1280;
-typing_can.height = 720;
+typing_can.width = 1024;
+typing_can.height = 768;
 
 // 画像画像の読み込み(ユーザ情報画面)
 let faceSrcImage = new Image();
@@ -70,7 +76,7 @@ user_face_can.height = FaceSprite[0].h * imageScaleRate + 50;
 
 // 画像画像の読み込み(タイピング画面)
 let monsterImage = new Image();
-monsterImage.src = MONSTER_IMG_JINOUGA;
+monsterImage.src = MONSTER_IMG_DOSBAGY;
 
 // キーボードの状態保持
 let key = [];
@@ -157,22 +163,65 @@ function drawCurrentUserInformation() {
   // 顔描画
   let currentUserData = UserInformationTable[0];
   console.log(currentUserData);
-  PartsIndexs[INDEX_PARTS_FACE]     = currentUserData.INDEX_PARTS_FACE;
-  PartsIndexs[INDEX_PARTS_EYEBROW]  = currentUserData.INDEX_PARTS_EYEBROW;
-  PartsIndexs[INDEX_PARTS_EYE]      = currentUserData.INDEX_PARTS_EYE;
-  PartsIndexs[INDEX_PARTS_NOSE]     = currentUserData.INDEX_PARTS_NOSE;
-  PartsIndexs[INDEX_PARTS_MOUTH]    = currentUserData.INDEX_PARTS_MOUTH;
+  SetPartsIndexs(currentUserData);
   
   // ユーザ顔画像の描画
   DrawFace(user_face_can, user_face_con, faceSrcImage, imageScaleRate);
 
   // ユーザ名
-  /* $("#text_user_name").text(currentUserData.name);
+  $("#text_user_name").text(currentUserData.name);
   // 最高スコア
-  $("#text_highest_score").text(currentUserData.highestScore); */
+  $("#text_highest_score").text(currentUserData.highestScore);
 
 }
 
+// カウントダウンタイマ開始
+function startCountdownTimer(textBoxId, timerSec) {
+  let now = new Date();
+  let goal = new Date();
+  let totalSec = Number(timerSec);
+  // 終了時刻の計算
+  goal.setSeconds(goal.getSeconds() + totalSec);
+
+  // タイマの更新
+  function updateTimer() {
+    const diff = goal - new Date(); //時間の差を取得（ミリ秒）
+    let timerText = "";
+
+    // タイムアップ
+    if (diff <= 0) {
+      timerText = "0";
+      $(textBoxId).text(timerText);
+      // タイマー完了時のポップアップ表示
+      showPopupForTimerComplete();
+    } else {
+      timerText = Math.floor(diff / 1000);
+      $(textBoxId).text(timerText);
+      // 再び指定時刻後に時間をupdateする
+      refreshTimer();
+    }
+  }
+
+  // 500ms周期で関数呼び出し
+  function refreshTimer() {
+    setTimeout(updateTimer, 1000);
+  }
+
+  // 初回タイマ更新呼び出し(初回呼び出し後に定期的に時刻更新が実施される仕組み)
+  updateTimer();
+}
+
+// ゲームレベル設定
+const gameLevelSettings = [
+  { scoreThr:3, imgpath:MONSTER_IMG_DOSBAGY,},
+  { scoreThr:6, imgpath:MONSTER_IMG_FULFUL, },
+  { scoreThr:12,imgpath:MONSTER_IMG_REUS, },
+  { scoreThr:24,imgpath:MONSTER_IMG_TIGA, },
+  { scoreThr:50,imgpath:MONSTER_IMG_RAJYAN,},
+];
+
+// スコア
+let gameScore = 0;
 // 入力対象キーワード
 let target = new TargetKeyword(TypeKeywordList[getRandomValue(0, TypeKeywordList.length - 1)]);
 // 初期化処理
@@ -184,8 +233,56 @@ function gameInit() {
   // 現行ユーザ情報出力
   drawCurrentUserInformation();
 
+  $("#button_L1").val(0);
+  $("#button_L2").val(1);
+  $("#button_L3").val(2);
+  $("#button_L4").val(3);
+  $("#button_L5").val(4);
+
+  $("button").on("click", function (e) {
+    let idString = e.target.id;
+    console.log(idString.indexOf("button_L"));
+    if (idString.indexOf("button_L") == -1) {
+      return;
+    }
+
+    if (e.target.value >= 0 && e.target.value <= 4) {
+      monsterImage = new Image();
+      monsterImage.src = gameLevelSettings[e.target.value].imgpath;
+    }
+  });
+
   // 60fps
   setInterval(gameLoop, GAME_SPEED);
+
+  $("#game_start_button").on("click", () => {
+
+    gameScore = 0;
+
+    // カウントダウンタイマ開始
+    startCountdownTimer("#text_time_left", CountdownTimerSec);
+  })  
+}
+
+// タイマー完了時のポップアップ表示
+function showPopupForTimerComplete() {
+
+  var popup = document.getElementById("js-popup");
+  if (!popup) { return; }
+  popup.classList.add("is-show");
+
+  var blackBg = document.getElementById("js-black-bg");
+  var closeBtn = document.getElementById("js-close-btn");
+
+  closePopUp(blackBg);
+  closePopUp(closeBtn);
+
+  function closePopUp(elem) {
+    if (!elem) { return; }
+    elem.addEventListener("click", function() {
+      popup.classList.remove("is-show");
+    })
+  }
 }
 
 // 整数のランダムを作成
@@ -206,9 +303,12 @@ function gameLoop() {
   if (!target.destroyed) {
     target.draw();
   } else {
+    gameScore++;
     let arrayIndex = getRandomValue(0, TypeKeywordList.length - 1);
     target = new TargetKeyword(TypeKeywordList[arrayIndex]);
   }
+
+  $("#text_game_score").text(gameScore);
 }
 
 // ウィンドウ初期化処理

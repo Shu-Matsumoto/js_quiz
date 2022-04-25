@@ -58,10 +58,10 @@ function userRegistButtonOnclickEventHandler() {
     let userInformation = new UserInformation("", "", 0, 0, 0, 0,);
     userInformation.name = $("#input_name").val();                  // 名前
     userInformation.pw = $("#input_password").val();                // PW
-    userInformation.faceEyebrowId = $("#id_textbox_eyebrow").text(); // 眉選択番号
-    userInformation.faceEyeId = $("#id_textbox_eye").text();         // 目選択番号
-    userInformation.faceNoseId = $("#id_textbox_nose").text();       // 鼻選択番号
-    userInformation.faceMouthId = $("#id_textbox_mouth").text();     // 口選択番号
+    userInformation.faceEyebrowId = $("#id_textbox_eyebrow").text() - 1; // 眉選択番号
+    userInformation.faceEyeId = $("#id_textbox_eye").text() - 1;         // 目選択番号
+    userInformation.faceNoseId = $("#id_textbox_nose").text() - 1;       // 鼻選択番号
+    userInformation.faceMouthId = $("#id_textbox_mouth").text() - 1;     // 口選択番号
     
     // for DBG
     /* console.log("Name: " + $("#input_name").val());

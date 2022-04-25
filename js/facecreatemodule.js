@@ -71,6 +71,16 @@ export let NumOfPartsItems = [FaceSprite.length,
   MouthSprite.length
 ];
 
+// 選択パーツのインデックスセット
+export function SetPartsIndexs(currentUserData) {
+  
+  PartsIndexs[INDEX_PARTS_FACE]     = 0;
+  PartsIndexs[INDEX_PARTS_EYEBROW]  = currentUserData.faceEyebrowId;
+  PartsIndexs[INDEX_PARTS_EYE]      = currentUserData.faceEyeId;
+  PartsIndexs[INDEX_PARTS_NOSE]     = currentUserData.faceNoseId;
+  PartsIndexs[INDEX_PARTS_MOUTH]    = currentUserData.faceMouthId;
+}
+
 export function DrawFace(destinationCan, destinationCon, img, scaleRate) {
 
   // 描画基準位置
@@ -79,7 +89,7 @@ export function DrawFace(destinationCan, destinationCon, img, scaleRate) {
   let offsetX = 0;
   let offsetY = 0;
 
-  console.log(PartsIndexs);
+  //console.log(PartsIndexs);
 
   // 顔描画
   drawSprite(destinationCon,
