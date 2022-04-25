@@ -1,9 +1,20 @@
+// Import
+import { UserInformation } from "../js/userinformation.js";
+import { UserInformationTable } from "../js/userinformation.js";
+import { SaveUsersDataToLS, LoadUsersDataFromLS } from "../js/userinformation.js";
+import { INDEX_PARTS_FACE, INDEX_PARTS_EYEBROW, INDEX_PARTS_EYE, INDEX_PARTS_NOSE, INDEX_PARTS_MOUTH } from "../js/facecreatemodule.js";
+import { FaceSprite, EyebrowSprite, EyeSprite, NoseSprite, MouthSprite, PartsIndexs } from "../js/facecreatemodule.js";
+import { DrawFace } from "../js/facecreatemodule.js";
+
 // 画面フレームレート
 const FPS = 60;
 // ゲームスピード(ms) 60fps
 const GAME_SPEED = 1000 / FPS;
 
-// ロードする画像ファイルパス
+// ロードする画像ファイルパス(ユーザ情報画面)
+const SPRITE_FACE_IMG = "../img/kaoparts_resize_mini.png";
+
+// ロードする画像ファイルパス(タイピング画面)
 const MONSTER_IMG_TIGA = "../img/mh/tigarex.jpg";// ティガレックス
 const MONSTER_IMG_JINOUGA = "../img/mh/jinouga.jpg";// ティガレックス
 
@@ -41,12 +52,23 @@ const TypeKeywordList = [
 ];
 
 // キャンバス(タイピングエリア)
+let user_face_can = document.getElementById("can_user_information");
+let user_face_con = user_face_can.getContext("2d");
+
+// キャンバス(タイピングエリア)
 let typing_can = document.getElementById("can_typing");
 let typing_con = typing_can.getContext("2d");
 typing_can.width = 1280;
 typing_can.height = 720;
 
-// 画像画像の読み込み
+// 画像画像の読み込み(ユーザ情報画面)
+let faceSrcImage = new Image();
+faceSrcImage.src = SPRITE_FACE_IMG;
+let imageScaleRate = 1 / 14.3;
+user_face_can.width = FaceSprite[0].w * imageScaleRate + 50;
+user_face_can.height = FaceSprite[0].h * imageScaleRate + 50;
+
+// 画像画像の読み込み(タイピング画面)
 let monsterImage = new Image();
 monsterImage.src = MONSTER_IMG_JINOUGA;
 
@@ -121,6 +143,7 @@ class TargetKeyword{
     typing_con.strokeText("keyword:" + this.keyword, TEXT_DRAW_POS_X - textWidth / 2, TEXT_DRAW_POS_Y);
     // 残り入力必要アルファベット
     let subKeyword = this.keyword.substring(this.inputCompleteCount, this.keywordAlphabets.length);
+    //console.log(subKeyword + "_" + this.inputCompleteCount + "_" + this.keywordAlphabets.length);
     textWidth = typing_con.measureText(subKeyword).width ;
     typing_con.fillText(subKeyword, TEXT_DRAW_POS_X - textWidth / 2, TEXT_DRAW_POS_Y + INPUT_DONE_POS_OFFSET_Y);
     typing_con.fillStyle = "rgb(255, 255, 255)"; 
@@ -128,10 +151,39 @@ class TargetKeyword{
   }
 }
 
+// 現行ユーザ情報出力
+function drawCurrentUserInformation() {
+
+  // 顔描画
+  let currentUserData = UserInformationTable[0];
+  console.log(currentUserData);
+  PartsIndexs[INDEX_PARTS_FACE]     = currentUserData.INDEX_PARTS_FACE;
+  PartsIndexs[INDEX_PARTS_EYEBROW]  = currentUserData.INDEX_PARTS_EYEBROW;
+  PartsIndexs[INDEX_PARTS_EYE]      = currentUserData.INDEX_PARTS_EYE;
+  PartsIndexs[INDEX_PARTS_NOSE]     = currentUserData.INDEX_PARTS_NOSE;
+  PartsIndexs[INDEX_PARTS_MOUTH]    = currentUserData.INDEX_PARTS_MOUTH;
+  
+  // ユーザ顔画像の描画
+  DrawFace(user_face_can, user_face_con, faceSrcImage, imageScaleRate);
+
+  // ユーザ名
+  /* $("#text_user_name").text(currentUserData.name);
+  // 最高スコア
+  $("#text_highest_score").text(currentUserData.highestScore); */
+
+}
+
 // 入力対象キーワード
 let target = new TargetKeyword(TypeKeywordList[getRandomValue(0, TypeKeywordList.length - 1)]);
 // 初期化処理
-function gameInit(){
+function gameInit() {
+  
+  // localstrageからAPPデータロード
+  LoadUsersDataFromLS();
+
+  // 現行ユーザ情報出力
+  drawCurrentUserInformation();
+
   // 60fps
   setInterval(gameLoop, GAME_SPEED);
 }
@@ -141,6 +193,7 @@ function getRandomValue(min, max)
 {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
 // ゲームループ(インターバル間隔でコールされるメソッド定義)
 function gameLoop() {
   

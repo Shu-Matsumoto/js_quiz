@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Bootstrap CSSの読み込み -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
     <title>Document</title>
     <link rel="stylesheet" href="../css/facecreatestyle.css" />
   </head>
@@ -27,43 +34,100 @@
             <li class="part_select_item" id="part_select_item_eyebrow">
               <p>眉毛</p>
               <div class="part_select_control">
-                <input type="button" value="←" id="id_button_eyebrow_l" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="←"
+                  id="id_button_eyebrow_l"
+                />
                 <p id="id_textbox_eyebrow">1</p>
-                <input type="button" value="→" id="id_button_eyebrow_r" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="→"
+                  id="id_button_eyebrow_r"
+                />
               </div>
             </li>
             <li class="part_select_item" id="part_select_item_eye">
               <p>目</p>
               <div class="part_select_control">
-                <input type="button" value="←" id="id_button_eye_l" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="←"
+                  id="id_button_eye_l"
+                />
                 <p id="id_textbox_eye">1</p>
-                <input type="button" value="→" id="id_button_eye_r" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="→"
+                  id="id_button_eye_r"
+                />
               </div>
             </li>
             <li class="part_select_item" id="part_select_item_nose">
               <p>鼻</p>
               <div class="part_select_control">
-                <input type="button" value="←" id="id_button_nose_l" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="←"
+                  id="id_button_nose_l"
+                />
                 <p id="id_textbox_nose">1</p>
-                <input type="button" value="→" id="id_button_nose_r" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="→"
+                  id="id_button_nose_r"
+                />
               </div>
             </li>
             <li class="part_select_item" id="part_select_item_mouth">
               <p>口</p>
               <div class="part_select_control">
-                <input type="button" value="←" id="id_button_mouth_l" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="←"
+                  id="id_button_mouth_l"
+                />
                 <p id="id_textbox_mouth">1</p>
-                <input type="button" value="→" id="id_button_mouth_r" />
+                <input
+                  type="button"
+                  class="btn btn-primary"
+                  value="→"
+                  id="id_button_mouth_r"
+                />
               </div>
             </li>
           </ul>
         </div>
         <div class="user_information_regist_area">
-          <input type="button" value="登録" id="id_button_user_regist" />
+          <input
+            type="button"
+            class="btn btn-primary"
+            value="登録"
+            id="id_button_user_regist"
+          />
         </div>
       </div>
     </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="../js/facecreate.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+      integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../js/userinformation.js" type="module"></script>
+    <script src="../js/facecreatemodule.js" type="module"></script>
+    <script src="../js/facecreate.js" type="module"></script>
   </body>
 </html>
