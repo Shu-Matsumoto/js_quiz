@@ -32,6 +32,6 @@ export function LoadUsersDataFromLS() {
   if (localStorage.getItem(ID_APP_DATA_ON_LS)) {
     const jsonData = localStorage.getItem(ID_APP_DATA_ON_LS);
     UserInformationTable = JSON.parse(jsonData);
-    console.log(jsonData);
+    //console.log(jsonData);
   }
 }

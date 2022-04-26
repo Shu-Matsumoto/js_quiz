@@ -8,7 +8,7 @@ $("#login_button").on("click", () => {
   let userName = $("#input_name").val();
   // PW取得
   let pw = $("#input_password").val();
-  console.log(userName + " , " + pw);
+  //console.log(userName + " , " + pw);
 
   // ログイン通過
   let loginPass = false; 
@@ -26,7 +26,10 @@ $("#login_button").on("click", () => {
 
   // ログイン情報判定結果チェック
   if (loginPass) {
-    window.location.href = "../html/typing.html";
+    $(document.body).fadeOut("slow", function(){
+      window.location.href = "../html/typing.html" + "?" +
+        "username=" + encodeURIComponent(userName);
+    });
   } else {
     alert("ユーザ名、パスワードが誤っています。");
   }
@@ -34,7 +37,9 @@ $("#login_button").on("click", () => {
 
 // ユーザ登録ボタンクリック時イベント
 $("#user_registration_button").on("click", () => {
-  window.location.href = "../html/facecreate.html";
+  $(document.body).fadeOut("slow", function(){
+      window.location.href = "../html/facecreate.html";
+    });
 });
 
 // ウィンドウ初期化処理

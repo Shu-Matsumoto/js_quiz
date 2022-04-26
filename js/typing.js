@@ -158,11 +158,13 @@ class TargetKeyword{
 }
 
 // 現行ユーザ情報出力
-function drawCurrentUserInformation() {
+function drawCurrentUserInformation(userName) {
 
-  // 顔描画
-  let currentUserData = UserInformationTable[0];
+  // ユーザ情報引き当て
+  console.log(userName);
+  let currentUserData = UserInformationTable.find(item => item.name == userName);
   console.log(currentUserData);
+  if (currentUserData == null) { return; }
   SetPartsIndexs(currentUserData);
   
   // ユーザ顔画像の描画
@@ -225,13 +227,13 @@ let gameScore = 0;
 // 入力対象キーワード
 let target = new TargetKeyword(TypeKeywordList[getRandomValue(0, TypeKeywordList.length - 1)]);
 // 初期化処理
-function gameInit() {
+function gameInit(userName) {
   
   // localstrageからAPPデータロード
   LoadUsersDataFromLS();
 
   // 現行ユーザ情報出力
-  drawCurrentUserInformation();
+  drawCurrentUserInformation(userName);
 
   $("#button_L1").val(0);
   $("#button_L2").val(1);
@@ -312,15 +314,22 @@ function gameLoop() {
 }
 
 // ウィンドウ初期化処理
-function windowInit() {
+function windowInit(userName) {
   
   // 背景画像の描画
   typing_con.drawImage(monsterImage, 0, 0, monsterImage.width, monsterImage.height, 0, 0, 1280, 720);
   // ゲーム初期化
-  gameInit();
+  gameInit(userName);
 }
 
 // オンロードで描画
 window.onload = function () {
-  windowInit();
+
+  // 呼び出しページからの引数(ログインユーザ名)を受け取り
+  let query = location.search;
+  let value = query.split('=');
+  let userName = decodeURIComponent(value[1]);
+  console.log("login user name: " + userName);
+
+  windowInit(userName);
 }

@@ -158,6 +158,14 @@ function windowInit()
 
   // 登録ボタンクリックイベントハンドラ登録
   userRegistButtonOnclickEventHandler();
+
+  // 戻るボタンクリックイベントハンドラ登録
+  $("#id_button_return_home").on("click", () => {
+
+    $(document.body).fadeOut("slow", function(){
+      window.location.href = "../index.html";
+    });
+  });
 }
 
 // オンロードで描画
