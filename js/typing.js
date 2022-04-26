@@ -55,7 +55,7 @@ const TypeKeywordList = [
 ];
 
 // カウントダウンタイマ[sec]
-const CountdownTimerSec = 5;
+const CountdownTimerSec = 30;
 
 // キャンバス(タイピングエリア)
 let user_face_can = document.getElementById("can_user_information");
@@ -126,8 +126,8 @@ class TargetKeyword{
       // キー入力済
       this.inputCompleteCount++;
 
+      // キータイプ時の効果音
       var audio = new Audio();
-      //sample.mp3の1.5秒～5.8秒まで再生する
       audio.src = "../audio/Keyboard01.mp3#t=0.0,0.1";
       audio.play();
     }
@@ -194,6 +194,9 @@ function startCountdownTimer(textBoxId, timerSec) {
     if (diff <= 0) {
       timerText = "0";
       $(textBoxId).text(timerText);
+      // BGM停止
+      game_BGM.pause();
+      game_BGM.currentTime = 0;
       // タイマー完了時のポップアップ表示
       showPopupForTimerComplete();
     } else {
@@ -222,6 +225,9 @@ const gameLevelSettings = [
   { scoreThr:50,imgpath:MONSTER_IMG_RAJYAN,},
 ];
 
+// BGM再生
+var game_BGM = new Audio();
+game_BGM.src = "../audio/魔王魂 旧ゲーム音楽 ボス08.mp3";
 // スコア
 let gameScore = 0;
 // 入力対象キーワード
@@ -260,6 +266,11 @@ function gameInit(userName) {
   $("#game_start_button").on("click", () => {
 
     gameScore = 0;
+
+    game_BGM.pause();
+    game_BGM.currentTime = 0;
+    game_BGM.volume = 0.1;
+    game_BGM.play();
 
     // カウントダウンタイマ開始
     startCountdownTimer("#text_time_left", CountdownTimerSec);
@@ -318,6 +329,7 @@ function windowInit(userName) {
   
   // 背景画像の描画
   typing_con.drawImage(monsterImage, 0, 0, monsterImage.width, monsterImage.height, 0, 0, 1280, 720);
+
   // ゲーム初期化
   gameInit(userName);
 }
